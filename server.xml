@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="SCIM server">
+
+    <!-- Enable features -->
+   <featureManager>
+        <feature>appSecurity-2.0</feature>
+        <feature>servlet-3.0</feature>
+        <feature>ldapRegistry-3.0</feature>
+        <feature>scim-1.0</feature>
+        <feature>transportSecurity-1.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+
+        <!-- SCIM LDAP configuration -->
+        <ldapRegistry id="LDAP1" host=${host} port="636" ldapType=${ldapType} baseDN=${baseDN} bindDN=${bindDN} bindPassword=${bindPassword} sslEnabled="true">
+        </ldapRegistry>
+
+        <basicRegistry>
+                <user name="admin" password="admin"/>
+        </basicRegistry>
+
+        <administrator-role>
+                <user>admin</user>
+        </administrator-role>
+
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+</server>

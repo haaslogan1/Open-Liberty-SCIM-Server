@@ -25,16 +25,18 @@ Since SSL is enabled, the LDAP server's root and intermediate certificates need 
 
 The server.env file should be encrypted as it will store the bind user's password.
 
-# Example invoking the SCIM API
+# Example invoking the SCIM API to return User Attributes
 ```
-curl -vks GET "https://localhost:9443/ibm/api/scim/Users/_uid=X_" -u admin:admin
+curl -vks GET "https://localhost:9443/ibm/api/scim/Users/uid=X" -u admin:admin
 ```
 
 Host is set to localhost. So, this command must be run on the machine where Liberty is running. By default, Liberty includes a firewall not accepting any inbound traffic outside localhost. To change this, set the [host property](https://openliberty.io/docs/latest/reference/config/virtualHost.html)
 
 Port is set to 9443. This is the HTTPS port specified in the server.xml.
 
-The -u option specificies the user credentials (in the HTTP GET call) required to access the protected API endpoint.
+The end of the URL (_uid=X_) should be replaced with the user that you would like to query as a name-value pair: _attribute=usersValue_.
+
+The -u option specificies the user credentials (in the HTTP GET call) required to access the protected API endpoint. In this case, we are using a basic registry admin user defined in the server.xml.
 
 # Remove the Basic Registry
 
